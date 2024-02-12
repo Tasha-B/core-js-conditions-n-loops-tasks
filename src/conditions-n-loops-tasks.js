@@ -62,8 +62,12 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  return (
+    queen.x === king.x ||
+    queen.y === king.y ||
+    Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)
+  );
 }
 
 /**
@@ -405,8 +409,21 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const digits = Array.from(String(number), Number);
+
+  let i = digits.length - 2;
+  while (i >= 0 && digits[i] >= digits[i + 1]) i -= 1;
+
+  if (i === -1) return -1;
+
+  let j = digits.length - 1;
+  while (digits[j] <= digits[i]) j -= 1;
+
+  [digits[i], digits[j]] = [digits[j], digits[i]];
+  const sorted = digits.splice(i + 1).sort((a, b) => a - b);
+  digits.push(...sorted);
+  return +digits.join('');
 }
 
 module.exports = {
